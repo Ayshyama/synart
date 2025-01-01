@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:latest
+    container_name: synart_postgres
+    environment:
+      POSTGRES_USER: synart_user
+      POSTGRES_PASSWORD: synart_password
+      POSTGRES_DB: synart_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

@@ -1,0 +1,65 @@
+# Byte-compiled files
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environment
+env/
+venv/
+.venv/
+
+# Environment variables file
+.env
+
+# Logs and runtime data
+*.log
+*.pid
+*.seed
+*.out
+*.gz
+
+# IDE/editor config files
+.vscode/
+.idea/
+*.swp
+*.swo
+*.bak
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Test artifacts
+.coverage
+*.cover
+*.py,cover
+.tox/
+nosetests.xml
+coverage.xml
+*.pytest_cache
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Debugging tools
+*.prof
+*.lprof
+*.stackdump
+
+# Docker-related files
+*.dockerfile
+.dockerignore
+
+# Python packaging
+*.egg
+*.wheel
+
+# Miscellaneous
+*.~*      # Backup files
+*.orig    # Merge conflict resolution files
