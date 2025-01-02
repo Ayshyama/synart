@@ -25,12 +25,12 @@ dp = Dispatcher()
 
 @dp.message(Command("start"))
 async def cmd_start(message: Message):
-    keyboard = InlineKeyboardMarkup()
+    # Create an InlineKeyboardMarkup with a single button
     web_app_button = InlineKeyboardButton(
         text="Open Mini App",
         web_app=WebAppInfo(url="http://localhost:5173")  # Update to your frontend's URL
     )
-    keyboard.add(web_app_button)
+    keyboard = InlineKeyboardMarkup(inline_keyboard=[[web_app_button]])  # Use a nested list for the buttons
 
     if BACKEND_URL:
         async with ClientSession() as session:

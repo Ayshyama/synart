@@ -1,7 +1,7 @@
 from fastapi import FastAPI
-from .db import engine
-from .models.user import Base
-from .routers import user
+from backend.db import engine
+from backend.models.user import Base
+from backend.routers import user
 
 app = FastAPI()
 
@@ -14,5 +14,4 @@ async def startup():
 async def ping():
     return {"status": "Backend is running!"}
 
-# Include the user router
 app.include_router(user.router)

@@ -1,9 +1,9 @@
-from fastapi import APIRouter, HTTPException, Depends, status
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.future import select
-from ..db import get_session
-from ..models.user import User
+from fastapi import APIRouter, Depends, HTTPException, status
 from pydantic import BaseModel
+from sqlalchemy.future import select
+from sqlalchemy.ext.asyncio import AsyncSession
+from backend.db import get_session
+from backend.models.user import User
 
 router = APIRouter()
 
@@ -11,16 +11,17 @@ class UserCreateRequest(BaseModel):
     username: str
 
 @router.post("/user", status_code=status.HTTP_201_CREATED)
-async def create_user(user: UserCreateRequest, session: AsyncSession = Depends(get_session)):
-    # Check if user already exists
-    result = await session.execute(select(User).where(User.username == user.username))
-    existing_user = result.scalars().first()
+async def create_user(
+    user_req: UserCreateRequest,
+    session: AsyncSession = Depends(get_session)
+):
+    q = await session.execute(select(User).where(User.username == user_req.username))
+    existing_user = q.scalars().first()
     if existing_user:
-        return {"message": "User already exists"}  # Return 200 OK
+        raise HTTPException(status_code=400, detail="User already exists")
 
-    # Create new user
-    new_user = User(username=user.username)
+    new_user = User(username=user_req.username)
     session.add(new_user)
     await session.commit()
     await session.refresh(new_user)
-    return {"message": "User created successfully", "user": {"id": new_user.id, "username": new_user.username}}
+    return {"message": "User created", "user_id": new_user.id}
