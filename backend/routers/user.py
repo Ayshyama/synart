@@ -5,7 +5,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from backend.db import get_session
 from backend.models.user import User
 
-router = APIRouter()
+router = APIRouter(prefix="/api")
 
 class UserCreateRequest(BaseModel):
     username: str

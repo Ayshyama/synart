@@ -6,6 +6,7 @@ from aiogram.filters import Command
 from aiohttp import ClientSession
 from dotenv import load_dotenv
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, WebAppInfo
+import time
 
 load_dotenv()
 
@@ -28,7 +29,7 @@ async def cmd_start(message: Message):
     # Create an InlineKeyboardMarkup with a single button
     web_app_button = InlineKeyboardButton(
         text="Open Mini App",
-        web_app=WebAppInfo(url="http://localhost:5173")  # Update to your frontend's URL
+        web_app=WebAppInfo(url="https://igors.dev?version={int(time.time())}")  # Update to your frontend's URL
     )
     keyboard = InlineKeyboardMarkup(inline_keyboard=[[web_app_button]])  # Use a nested list for the buttons
 
@@ -38,7 +39,7 @@ async def cmd_start(message: Message):
             async with session.post(f"{BACKEND_URL}/user", json=payload) as resp:
                 if resp.status == 201:
                     await message.answer("Welcome to SYNART! Your profile has been created.", reply_markup=keyboard)
-                elif resp.status == 200:
+                elif resp.status == 400:
                     await message.answer("Welcome back to SYNART!", reply_markup=keyboard)
                 else:
                     await message.answer("Failed to create your profile. Please try again.", reply_markup=keyboard)
